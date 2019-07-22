@@ -1,21 +1,38 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
+import Header from './components/Header'
+import LeftPane from './components/LeftPane'
+import RightPane from './components/RightPane';
+
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+  
+    constructor() {
+      super()
+      this.state = {
+        totalAmount : 0
+      }
+      this.parentCallback = this.parentCallback.bind(this)
+    }
+
+    parentCallback(data) {
+      console.log("Parent Callback")
+      console.log(data)
+      this.setState({totalAmount:data})
+    }
+    
+    render() {
+      return (
+        <div className="App">
+          <Header/>
+
+          <div className="lower-pane">
+            <LeftPane callbackFromParent={this.parentCallback}/>
+            <RightPane value={this.state.totalAmount}/>
+          </div>
         </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
-  }
+      );
+    }
 }
 
 export default App;
