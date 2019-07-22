@@ -11,51 +11,23 @@ class RightPane extends React.Component {
 
     constructor() {
         super()
-        this.myObj = {
-            one : 0,
-            two: 0,
-            five : 0,
-            ten : 0,
-            twenty: 0,
-            fifty: 0,
-            hundred: 0,
-            fivehundred: 0,
-            twothousand: 0
-        }
-        this.handleClick = this.handleClick.bind(this)
         this.handleValue = this.handleValue.bind(this)
     }
 
-    handleClick() {
-        console.log("Clicked")
-        this.setState(
-            {
-                one: 1,
-                two: 4,
-                five: 0,
-                ten: 7,
-                twenty: 0,
-                fifty: 1,
-                hundred: 2,
-                fivehundred: 3,
-                twothousand: 2
-            }
-        )
-    }
+    getNotes(total) {
+        var result = {};
+        var arr = [2000, 500, 200, 100, 50, 20, 10, 5, 2, 1];
+            arr.forEach(function(num){
+                let obj = {};
+                obj[num] = Math.trunc(total/num);
+                total = total - (Math.trunc(total/num)*num);
+                Object.assign(result,obj);
+            });
+        return result;
+    };
+
     handleValue() {
-        console.log(this.props.value);
-        this.myObj = {
-            one : this.props.value,
-            two: 0,
-            five : 0,
-            ten : 0,
-            twenty: 0,
-            fifty: 0,
-            hundred: 0,
-            fivehundred: 0,
-            twothousand: 0
-        }
-        return this.myObj
+        return this.getNotes(this.props.value)
     }
 
     render() {
